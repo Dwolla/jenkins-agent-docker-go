@@ -2,6 +2,11 @@ FROM dwolla/jenkins-agent-core
 MAINTAINER Dwolla Dev <dev+jenkins-go@dwolla.com>
 LABEL org.label-schema.vcs-url="https://github.com/Dwolla/jenkins-agent-docker-go"
 
+USER root
+
+RUN apk add --no-cache make nodejs-npm
+RUN npm install -g serverless
+
 ### Start golang, from https://github.com/docker-library/golang/blob/master/1.9/alpine3.6/Dockerfile
 RUN apk add --no-cache ca-certificates
 
@@ -58,3 +63,5 @@ WORKDIR $GOPATH
 
 COPY go-wrapper /usr/local/bin/
 ### END golang
+
+USER jenkins
